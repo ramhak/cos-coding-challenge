@@ -31,11 +31,12 @@ describe("get running auctions", () => {
     });
     describe("the auctions",()=>{
         it("should return number of bids for each auction",async ()=>{
-            api = new CarOnSaleApiStub([{numBids:0}]);
+            api = new CarOnSaleApiStub([{numBids:1},{numBids:2}]);
             container.bind(DependencyIdentifier.CAR_ON_SALE_API).toConstantValue(api);
             const client = container.get<ICarOnSaleClient>(DependencyIdentifier.CAR_ON_SALE_CLIENT);
             let runningAuctions = await client.getRunningAuctions();
             expect(runningAuctions.auctions[0].numberOfBids).eq(1)
+            expect(runningAuctions.auctions[1].numberOfBids).eq(2)
         })
     })
 

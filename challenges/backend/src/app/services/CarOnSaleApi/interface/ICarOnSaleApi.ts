@@ -1,4 +1,5 @@
 export interface ISalesmanAllBiddingDataResult {
+    numBids:number
 }
 
 export interface ICarOnSaleApi {

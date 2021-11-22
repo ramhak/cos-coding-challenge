@@ -22,12 +22,21 @@ describe("get running auctions", () => {
             expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(0);
         });
         it("should return the number of running auctions", async () => {
-            api = new CarOnSaleApiStub([{}, {}]);
+            api = new CarOnSaleApiStub([{numBids:0}, {numBids:0}]);
             container.bind(DependencyIdentifier.CAR_ON_SALE_API).toConstantValue(api);
             const client = container.get<ICarOnSaleClient>(DependencyIdentifier.CAR_ON_SALE_CLIENT);
             expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(2);
 
         });
+    });
+    describe("the auctions",()=>{
+        it("should return number of bids for each auction",async ()=>{
+            api = new CarOnSaleApiStub([{numBids:0}]);
+            container.bind(DependencyIdentifier.CAR_ON_SALE_API).toConstantValue(api);
+            const client = container.get<ICarOnSaleClient>(DependencyIdentifier.CAR_ON_SALE_CLIENT);
+            let runningAuctions = await client.getRunningAuctions();
+            expect(runningAuctions.auctions[0].numberOfBids).eq(1)
+        })
     })
 
 });

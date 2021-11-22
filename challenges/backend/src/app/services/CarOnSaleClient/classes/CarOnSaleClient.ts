@@ -12,9 +12,14 @@ export class CarOnSaleClient implements ICarOnSaleClient {
 
     async getRunningAuctions(userId: string = ""): Promise<IRunningAuctionsResult> {
         let allBiddingData = await this.api.getSalesmanAllBiddingData(userId);
-
         return Promise.resolve({
-            numberOfRunningAuctions: allBiddingData.length
+            numberOfRunningAuctions: allBiddingData.length,
+            auctions: [
+                {
+                    numberOfBids: 1
+                }
+            ]
+
         });
     }
 

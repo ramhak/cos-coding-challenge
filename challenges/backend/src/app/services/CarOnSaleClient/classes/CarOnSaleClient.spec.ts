@@ -16,18 +16,28 @@ describe("get running auctions", () => {
 
     describe("number of auctions", () => {
         it("should be 0 when there are no auctions", async () => {
-            //container.unbind(DependencyIdentifier.CAR_ON_SALE_API);
-            api = new StubCarOnSaleApi();
+            api = new CarOnSaleApiStub([]);
             container.bind(DependencyIdentifier.CAR_ON_SALE_API).toConstantValue(api);
-            let client = container.get<ICarOnSaleClient>(DependencyIdentifier.CAR_ON_SALE_CLIENT);
+            const client = container.get<ICarOnSaleClient>(DependencyIdentifier.CAR_ON_SALE_CLIENT);
             expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(0);
-        })
+        });
+        it("should return the number of running auctions", async () => {
+            api = new CarOnSaleApiStub([{}, {}]);
+            container.bind(DependencyIdentifier.CAR_ON_SALE_API).toConstantValue(api);
+            const client = container.get<ICarOnSaleClient>(DependencyIdentifier.CAR_ON_SALE_CLIENT);
+            expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(2);
+
+        });
     })
 
 });
 
-class StubCarOnSaleApi implements ICarOnSaleApi {
+class CarOnSaleApiStub implements ICarOnSaleApi {
+
+    constructor(private data: ISalesmanAllBiddingDataResult[]) {
+    }
+
     getSalesmanAllBiddingData(_userId: string): Promise<ISalesmanAllBiddingDataResult[]> {
-        return Promise.resolve([]);
+        return Promise.resolve(this.data);
     }
 }

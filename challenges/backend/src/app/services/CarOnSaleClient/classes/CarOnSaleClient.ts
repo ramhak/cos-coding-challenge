@@ -14,7 +14,14 @@ export class CarOnSaleClient implements ICarOnSaleClient {
         let allBiddingData = await this.api.getSalesmanAllBiddingData(userId);
         return Promise.resolve({
             numberOfRunningAuctions: allBiddingData.length,
-            auctions: allBiddingData.map(d=>{return {numberOfBids:d.numBids}})
+            auctions: allBiddingData.map(d => {
+                return {
+                    id: d.uuid,
+                    numberOfBids: d.numBids,
+                    auctionProgress: (d.currentHighestBidValue / d.minimumRequiredAsk) * 100
+
+                }
+            })
         });
     }
 

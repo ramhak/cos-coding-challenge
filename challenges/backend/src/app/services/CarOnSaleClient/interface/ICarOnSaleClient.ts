@@ -1,10 +1,12 @@
 export interface IAuctionSummary {
-    numberOfBids:number
+    auctionProgress: number;
+    id: string,
+    numberOfBids: number
 }
 
 export interface IRunningAuctionsResult {
     auctions: IAuctionSummary[],
-    numberOfRunningAuctions:number
+    numberOfRunningAuctions: number
 }
 
 /**

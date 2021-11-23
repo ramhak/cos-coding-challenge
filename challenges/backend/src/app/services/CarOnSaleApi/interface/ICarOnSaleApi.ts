@@ -1,5 +1,8 @@
 export interface ISalesmanAllBiddingDataResult {
-    numBids:number
+    uuid: string
+    numBids: number
+    minimumRequiredAsk: number,
+    currentHighestBidValue: number
 }
 
 export interface ICarOnSaleApi {

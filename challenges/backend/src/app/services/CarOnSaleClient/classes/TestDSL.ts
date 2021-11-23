@@ -41,7 +41,10 @@ export class AuctionBuilder {
 
     constructor(private p: CarOnSaleClientBuilder) {
         this.auction = {
-            numBids: 0
+            uuid: "",
+            numBids: 0,
+            minimumRequiredAsk:0,
+            currentHighestBidValue:0
         };
     }
 
@@ -55,4 +58,18 @@ export class AuctionBuilder {
         return this.p;
     }
 
+    withId(id: string): AuctionBuilder {
+        this.auction.uuid = id;
+        return this;
+    }
+
+    withMinimumRequiredAsk(minimumRequiredAsk: number) {
+        this.auction.minimumRequiredAsk = minimumRequiredAsk;
+        return this;
+    }
+
+    withCurrentHighestBidValue(currentHighestBidValue: number) {
+       this.auction.currentHighestBidValue = currentHighestBidValue;
+       return this;
+    }
 }

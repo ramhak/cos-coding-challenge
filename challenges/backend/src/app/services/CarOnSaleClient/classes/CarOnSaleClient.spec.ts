@@ -1,5 +1,4 @@
 import {expect} from "chai";
-import {ICarOnSaleClient} from "../interface/ICarOnSaleClient";
 import {Container} from "inversify";
 import {DependencyIdentifier} from "../../../DependencyIdentifiers";
 import {CarOnSaleClient} from "./CarOnSaleClient";
@@ -33,7 +32,7 @@ describe("get running auctions", () => {
     });
     describe("the auctions", () => {
         it("should return number of bids for each auction", async () => {
-            new CarOnSaleClientBuilder(container)
+            const client = new CarOnSaleClientBuilder(container)
                 .anAuction()
                 .withNumBids(1)
                 .buildAuction()
@@ -41,7 +40,6 @@ describe("get running auctions", () => {
                 .withNumBids(2)
                 .buildAuction()
                 .build();
-            const client = container.get<ICarOnSaleClient>(DependencyIdentifier.CAR_ON_SALE_CLIENT);
             let runningAuctions = await client.getRunningAuctions();
             expect(runningAuctions.auctions[0].numberOfBids).eq(1)
             expect(runningAuctions.auctions[1].numberOfBids).eq(2)

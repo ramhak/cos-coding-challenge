@@ -14,7 +14,7 @@ export class AuctionMonitorApp {
 
     public async start(): Promise<void> {
         this.logger.log(`Auction Monitor started.`);
-        let runningAuctions = await this.carOnSaleClient.getRunningAuctions("buyer-challenge@caronsale.de");
+        let runningAuctions = await this.carOnSaleClient.getRunningAuctions(process.env.USER_EMAIL);
         console.log(runningAuctions);
     }
 

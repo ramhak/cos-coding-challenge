@@ -3,29 +3,25 @@ import {Urls} from "./Urls";
 import {ContainerModule, interfaces} from "inversify"
 import {Types} from "./Types";
 
-const baseUrl = "https://api-core-dev.caronsale.de/api/v1";
 const _cache = new Map();
-const userId = "buyer-challenge@caronsale.de";
-const password = "Test123.";
 
 async function refreshAccessToken() {
-    let {data} = await axios.put(Urls.authentication(userId), {password: password});
+    let {data} = await axios.put(Urls.authentication(process.env.USER_EMAIL as string), {password: process.env.PASSWORD as string});
     return data.token;
-
 }
 
 function createAxios() {
-    let axiosInstance = axios.create({baseURL: baseUrl});
+    let axiosInstance = axios.create();
 
     axiosInstance.interceptors.request.use(async config => {
-        if (!_cache.has(userId)) {
-            _cache.set(userId, await refreshAccessToken());
+        if (!_cache.has(process.env.USER_EMAIL as string)) {
+            _cache.set(process.env.USER_EMAIL as string, await refreshAccessToken());
         }
 
-        let token = _cache.get(userId);
+        let token = _cache.get(process.env.USER_EMAIL as string);
         config.headers = {
             "authtoken": token,
-            "userid": userId,
+            "userid": process.env.USER_EMAIL as string,
             "content-type": "application/json"
         }
         return config;
@@ -35,8 +31,8 @@ function createAxios() {
         if (error.response?.status === 419 && !originalRequest._retry) {
             originalRequest._retry = true;
             let token = await refreshAccessToken();
-            _cache.set(userId, token);
-            axiosInstance.defaults.headers.common['authtoken'] = _cache.get(userId);
+            _cache.set(process.env.USER_EMAIL as string, token);
+            axiosInstance.defaults.headers.common['authtoken'] = _cache.get(process.env.USER_EMAIL as string);
             return axiosInstance(originalRequest);
         }
         return Promise.reject(error);
@@ -45,7 +41,7 @@ function createAxios() {
 }
 
 const AxiosModule: interfaces.ContainerModule = new ContainerModule((bind: interfaces.Bind) => {
-    let axiosInstance = createAxios();
+    const  axiosInstance = createAxios();
     bind<Axios>(Types.AXIOS).toConstantValue(axiosInstance);
 })
 

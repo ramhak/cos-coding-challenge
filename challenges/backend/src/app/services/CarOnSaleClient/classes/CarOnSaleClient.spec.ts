@@ -1,22 +1,14 @@
 import {expect} from "chai";
-import {Container} from "inversify";
-import {DependencyIdentifier} from "../../../DependencyIdentifiers";
-import {CarOnSaleClient} from "./CarOnSaleClient";
 import 'reflect-metadata';
-import {CarOnSaleClientBuilder} from "./TestDSL";
+import {CarOnSaleClientBuilder} from "./TestHelper";
+import {container} from "../../../Configs/InversifyConfig";
 
 describe("get running auctions", () => {
-    let container: Container;
-
-    beforeEach(() => {
-        container = new Container();
-        container.bind(DependencyIdentifier.CAR_ON_SALE_CLIENT).to(CarOnSaleClient)
-    });
 
     describe("number of auctions", () => {
         it("should be 0 when there are no auctions", async () => {
             const client = new CarOnSaleClientBuilder(container)
-                .build()
+                .build();
             expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(0);
         });
         it("should return the number of running auctions", async () => {
@@ -25,7 +17,7 @@ describe("get running auctions", () => {
                 .buildAuction()
                 .anAuction()
                 .buildAuction()
-                .build()
+                .build();
             expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(2);
 
         });
@@ -41,8 +33,8 @@ describe("get running auctions", () => {
                 .buildAuction()
                 .build();
             let runningAuctions = await client.getRunningAuctions();
-            expect(runningAuctions.auctions[0].numberOfBids).eq(1)
-            expect(runningAuctions.auctions[1].numberOfBids).eq(2)
+            expect(runningAuctions.auctions[0].numberOfBids).eq(1);
+            expect(runningAuctions.auctions[1].numberOfBids).eq(2);
         })
         it("should return the id of each auctions",async ()=>{
             let expectedId = "6612fcfd-6d1b-4492-a4d9-5dac3a296039";
@@ -51,7 +43,7 @@ describe("get running auctions", () => {
                 .withId(expectedId)
                 .buildAuction()
                 .build();
-            expect((await client.getRunningAuctions()).auctions[0].id).eq(expectedId)
+            expect((await client.getRunningAuctions()).auctions[0].id).eq(expectedId);
         })
         it("should return the progress of each auction",async ()=>{
             let client = new CarOnSaleClientBuilder(container)
@@ -60,7 +52,7 @@ describe("get running auctions", () => {
                 .withCurrentHighestBidValue(1600)
                 .buildAuction()
                 .build();
-            expect((await client.getRunningAuctions()).auctions[0].auctionProgress).eq(80);
+            expect((await client.getRunningAuctions()).auctions[0].auctionProgress).eq('80%');
         })
 
     })

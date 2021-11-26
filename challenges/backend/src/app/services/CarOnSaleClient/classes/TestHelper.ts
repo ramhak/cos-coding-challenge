@@ -1,7 +1,8 @@
 import {ICarOnSaleApi, ISalesmanAllBiddingDataResult} from "../../CarOnSaleApi/interface/ICarOnSaleApi";
 import {Container} from "inversify";
-import {DependencyIdentifier} from "../../../DependencyIdentifiers";
 import {ICarOnSaleClient} from "../interface/ICarOnSaleClient";
+import {Types} from "../../../Configs/Types";
+import {CarOnSaleClient} from "./CarOnSaleClient";
 
 export class CarOnSaleApiStub implements ICarOnSaleApi {
     constructor(private data: ISalesmanAllBiddingDataResult[]) {
@@ -29,21 +30,20 @@ export class CarOnSaleClientBuilder {
 
     build(): ICarOnSaleClient {
         let carOnSaleApiStub = new CarOnSaleApiStub(this.auctions);
-        this.container.bind(DependencyIdentifier.CAR_ON_SALE_API).toConstantValue(carOnSaleApiStub)
-        // this.container.bind(DependencyIdentifier.CAR_ON_SALE_API).toConstantValue(carOnSaleApiStub)
-        return this.container.get(DependencyIdentifier.CAR_ON_SALE_CLIENT);
+        this.container.rebind(Types.CAR_ON_SALE_API).toConstantValue(carOnSaleApiStub)
+         this.container.rebind(Types.CAR_ON_SALE_CLIENT).to(CarOnSaleClient)
+        return this.container.get(Types.CAR_ON_SALE_CLIENT);
     }
 }
 
 export class AuctionBuilder {
     private auction: ISalesmanAllBiddingDataResult;
 
-
     constructor(private p: CarOnSaleClientBuilder) {
         this.auction = {
             uuid: "",
             numBids: 0,
-            minimumRequiredAsk:0,
+            minimumRequiredAsk:1,
             currentHighestBidValue:0
         };
     }

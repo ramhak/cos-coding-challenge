@@ -1,7 +1,7 @@
 export interface IAuctionSummary {
-    auctionProgress: number;
-    id: string,
-    numberOfBids: number
+    id: string;
+    numberOfBids: number;
+    auctionProgress: string;
 }
 
 export interface IRunningAuctionsResult {

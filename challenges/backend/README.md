@@ -1,3 +1,5 @@
+# For an Explanation about my solution, go to the [help](../backend/HELP.md)
+
 # Backend Challenge
 
 Welcome to the CarOnSale backend coding challenge.

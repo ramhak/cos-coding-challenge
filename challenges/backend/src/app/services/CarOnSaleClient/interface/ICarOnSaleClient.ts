@@ -14,6 +14,6 @@ export interface IRunningAuctionsResult {
  */
 export interface ICarOnSaleClient {
 
-    getRunningAuctions(userId: string = ""): Promise<IRunningAuctionsResult>
+    getRunningAuctions(userId:string): Promise<IRunningAuctionsResult>
 
 }

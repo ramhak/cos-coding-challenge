@@ -11,11 +11,11 @@ const logger: ILogger = container.get(Types.LOGGER);
     try {
         if (process.env.NODE_ENV === "production") {
             process.env.USER_EMAIL = await prompt("Enter User Email : ")
-            process.env.PASSWORD = await password("Enter Password : ")
+            process.env.PASSWORD = await password("Enter Password : ",{replace:"*"})
         }
         await app.start();
-    } catch (e) {
-        logger.error(e);
+    } catch (e: any) {
+        logger.error(e.message as string);
         process.exit(1);
     }
 })();

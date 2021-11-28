@@ -9,7 +9,7 @@ describe("get running auctions", () => {
         it("should be 0 when there are no auctions", async () => {
             const client = new CarOnSaleClientBuilder(container)
                 .build();
-            expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(0);
+            expect((await client.getRunningAuctions("")).numberOfRunningAuctions).eq(0);
         });
         it("should return the number of running auctions", async () => {
             const client =new CarOnSaleClientBuilder(container)
@@ -18,7 +18,7 @@ describe("get running auctions", () => {
                 .anAuction()
                 .buildAuction()
                 .build();
-            expect((await client.getRunningAuctions()).numberOfRunningAuctions).eq(2);
+            expect((await client.getRunningAuctions("")).numberOfRunningAuctions).eq(2);
 
         });
     });
@@ -32,7 +32,7 @@ describe("get running auctions", () => {
                 .withNumBids(2)
                 .buildAuction()
                 .build();
-            let runningAuctions = await client.getRunningAuctions();
+            let runningAuctions = await client.getRunningAuctions("");
             expect(runningAuctions.auctions[0].numberOfBids).eq(1);
             expect(runningAuctions.auctions[1].numberOfBids).eq(2);
         })
@@ -43,7 +43,7 @@ describe("get running auctions", () => {
                 .withId(expectedId)
                 .buildAuction()
                 .build();
-            expect((await client.getRunningAuctions()).auctions[0].id).eq(expectedId);
+            expect((await client.getRunningAuctions("")).auctions[0].id).eq(expectedId);
         })
         it("should return the progress of each auction",async ()=>{
             let client = new CarOnSaleClientBuilder(container)
@@ -52,7 +52,7 @@ describe("get running auctions", () => {
                 .withCurrentHighestBidValue(1600)
                 .buildAuction()
                 .build();
-            expect((await client.getRunningAuctions()).auctions[0].auctionProgress).eq('80%');
+            expect((await client.getRunningAuctions("")).auctions[0].auctionProgress).eq('80%');
         })
 
     })

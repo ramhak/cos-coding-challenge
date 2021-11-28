@@ -1,6 +1,9 @@
 {
   "include": [
-    "./src/app/**/*"
+    "src/app/**/*"
+  ],
+  "exclude": [
+    "src/app/**/*.spec.ts","src/app/**/Test*.ts"
   ],
   "compilerOptions": {
     /* Basic Options */
@@ -16,9 +19,9 @@
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
-    "outDir": "./dist",
+    "outDir": "dist",
     /* Redirect output structure to the directory. */
-    "rootDir": "./src/app",
+    "rootDir": "src/app",
     /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "removeComments": true,                /* Do not emit comments to output. */

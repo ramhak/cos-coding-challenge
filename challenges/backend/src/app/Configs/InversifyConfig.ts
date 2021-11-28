@@ -1,11 +1,11 @@
 import {Container} from "inversify";
-import {ILogger} from "../services/Logger/interface/ILogger";
+import {ILogger} from "../Services/Logger/interface/ILogger";
 import {Types} from "./Types";
-import {Logger} from "../services/Logger/classes/Logger";
-import {ICarOnSaleClient} from "../services/CarOnSaleClient/interface/ICarOnSaleClient";
-import {CarOnSaleClient} from "../services/CarOnSaleClient/classes/CarOnSaleClient";
-import {ICarOnSaleApi} from "../services/CarOnSaleApi/interface/ICarOnSaleApi";
-import {CarOnSaleApi} from "../services/CarOnSaleApi/classes/CarOnSaleApi";
+import {Logger} from "../Services/Logger/classes/Logger";
+import {ICarOnSaleClient} from "../Services/CarOnSaleClient/interface/ICarOnSaleClient";
+import {CarOnSaleClient} from "../Services/CarOnSaleClient/classes/CarOnSaleClient";
+import {ICarOnSaleApi} from "../Services/CarOnSaleApi/interface/ICarOnSaleApi";
+import {CarOnSaleApi} from "../Services/CarOnSaleApi/classes/CarOnSaleApi";
 import {AxiosModule} from "./AxiosConfig";
 
 const container = new Container({

@@ -1,7 +1,7 @@
 import {AuctionMonitorApp} from "./AuctionMonitorApp";
 import {container} from "./Configs/InversifyConfig";
 import {Types} from "./Configs/Types";
-import {ILogger} from "./services/Logger/interface/ILogger";
+import {ILogger} from "./Services/Logger/interface/ILogger";
 import {password, prompt} from "promptly";
 
 const app = container.resolve(AuctionMonitorApp);
@@ -16,6 +16,6 @@ const logger: ILogger = container.get(Types.LOGGER);
         await app.start();
     } catch (e: any) {
         logger.error(e.message as string);
-        process.exit(1);
+        process.exit(-1);
     }
 })();

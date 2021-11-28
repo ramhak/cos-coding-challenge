@@ -1,8 +1,8 @@
 import {inject, injectable} from "inversify";
-import {ILogger} from "./services/Logger/interface/ILogger";
+import {ILogger} from "./Services/Logger/interface/ILogger";
 import {Types} from "./Configs/Types";
 import "reflect-metadata";
-import {ICarOnSaleClient} from "./services/CarOnSaleClient/interface/ICarOnSaleClient";
+import {ICarOnSaleClient} from "./Services/CarOnSaleClient/interface/ICarOnSaleClient";
 
 @injectable()
 export class AuctionMonitorApp {
